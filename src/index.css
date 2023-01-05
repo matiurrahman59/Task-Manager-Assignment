@@ -4,14 +4,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h2 {
+    @apply text-red-600 font-bold;
+  }
+}
+
+@layer components {
+  .main-header {
+    @apply bg-slate-100 p-3 rounded w-full md:w-1/2 md:h-[410px];
+  }
+}
 :root {
   /* COLOR_VARIABLES */
   --color-white: #fff;
-  --color-black: #000;
-  --color-orange-bg: rgba(227, 150, 74, 0.24);
-  --color-orange-text: #e3964a;
-  --color-red: #f7600e;
-  --color-grey: #f2f2f2;
 
   /* FONT_VARIABLES */
   --regular-font: 'Poppins', sans-serif;
@@ -38,7 +44,7 @@ body {
   font-family: var(--regular-font);
   font-size: 1.6rem;
   font-weight: var(--fw-regular);
-  background-color: var(--color-white);
+  background: gray;
   line-height: 1.6;
   overflow-x: hidden;
 }

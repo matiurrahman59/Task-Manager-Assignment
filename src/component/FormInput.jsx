@@ -7,14 +7,6 @@ const FormInput = ({ label, ...otherProps }) => {
         {label}:
       </label>
       <input {...otherProps} />
-      {/* <textarea
-        name='message'
-        id='text'
-        cols='auto'
-        rows='auto'
-        onChange={onChange}
-        value={message}
-      /> */}
     </div>
   );
 };

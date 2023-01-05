@@ -1,37 +1,71 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
+// INTERNAL IMPORTS
+import getTaskList from '../utils/fetchTaskData';
 import FormInput from './FormInput';
+import Button from './Button';
 
 const defaultFormFields = {
-  message: '',
-  date: '',
-  priority: '',
+  assignedName: '',
   assignedTo: '',
+  date: '',
+  message: '',
+  priority: '',
 };
 
-const TaskManager = () => {
-  const [formData, setFormData] = useState(defaultFormFields);
-  const { message, date, assignedTo, priority } = formData;
+const TaskManager = ({ setTaskList }) => {
+  const [taskFormData, setTaskFormData] = useState(defaultFormFields);
+  const { message, date, assignedTo, priority, assignedName } = taskFormData;
 
   const resetFormFields = () => {
-    setFormData(defaultFormFields);
+    setTaskFormData(defaultFormFields);
   };
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setTaskFormData({ ...taskFormData, [name]: value });
   };
 
-  const onSubmit = (e) => {
+  // Add task
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    console.log('working');
+
+    const formData = new FormData();
+
+    formData.append('message', message);
+    formData.append('priority', priority);
+    formData.append('assigned_to', assignedTo);
+    formData.append('due_date', date);
+    formData.append('assigned_name', assignedName);
+
+    try {
+      const res = await axios({
+        method: 'POST',
+        url: 'https://devza.com/tests/tasks/create',
+        headers: {
+          AuthToken: 'UrM4YHgb1FcqEf1tuKwmAMMX5MxFZ12a',
+          ContentType: 'multipart/form-data',
+        },
+        data: formData,
+      });
+
+      if (res.data.status === 'success') {
+        const res = await getTaskList();
+        setTaskList(res);
+        resetFormFields();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <div className='bg-slate-100 p-3 rounded w-1/2'>
+    <div className='main-header'>
+      <h2>Create Task</h2>
       <form
         onSubmit={onSubmit}
-        className='flex flex-col items-start space-y-5 my-4'
+        className='flex flex-col items-start space-y-5 my-4 px-4'
       >
         <FormInput
           label='Message'
@@ -63,6 +97,16 @@ const TaskManager = () => {
         />
 
         <FormInput
+          label='Assigned Name'
+          type='text'
+          name='assignedName'
+          id='number'
+          min='1'
+          onChange={onChange}
+          value={assignedName}
+        />
+
+        <FormInput
           label='Assigned To'
           type='number'
           name='assignedTo'
@@ -72,9 +116,9 @@ const TaskManager = () => {
           value={assignedTo}
         />
 
-        <button type='submit' className='bg-green-300 px-10 py-2 rounded-full'>
+        <Button type='submit' buttonType='Submit'>
           Submit
-        </button>
+        </Button>
       </form>
     </div>
   );
