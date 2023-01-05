@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* COLOR_VARIABLES */
+  --color-white: #fff;
+  --color-black: #000;
+  --color-orange-bg: rgba(227, 150, 74, 0.24);
+  --color-orange-text: #e3964a;
+  --color-red: #f7600e;
+  --color-grey: #f2f2f2;
+
+  /* FONT_VARIABLES */
+  --regular-font: 'Poppins', sans-serif;
+  --fw-regular: 400;
+  --fw-md: 600;
+  --fw-bold: 700;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  /* This defines what 1rem is */
+  font-size: 62.5%; /*1 rem = 10px; 10px/16px = 62.5%*/
+}
+
+body {
+  font-family: var(--regular-font);
+  font-size: 1.6rem;
+  font-weight: var(--fw-regular);
+  background-color: var(--color-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+input {
+  outline: none;
+}
+
+a,
+a:link,
+a:visited {
+  text-decoration: none;
+}
+
+input,
+textarea {
+  width: 100%;
+  outline: none;
+}
